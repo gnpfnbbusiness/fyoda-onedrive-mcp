@@ -1,0 +1,16 @@
+[project]
+name = "fyoda-onedrive-mcp"
+version = "0.1.0"
+description = "Read-only MCP server for a PERSONAL Microsoft OneDrive (Microsoft Graph, device-code sign-in)"
+requires-python = ">=3.10"
+dependencies = ["mcp>=1.2,<2", "msal>=1.28", "httpx>=0.27", "openpyxl>=3.1"]
+
+[project.scripts]
+fyoda-onedrive-mcp = "fyoda_onedrive_mcp.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["fyoda_onedrive_mcp"]

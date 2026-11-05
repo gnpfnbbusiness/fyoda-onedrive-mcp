@@ -1,0 +1,19 @@
+# Blueprint DRAFT for review only. Nothing is created until you approve it. Secrets (sync: false) are entered in the Render dashboard, never in chat or Git.
+services:
+  - type: web
+    name: fyoda-onedrive-mcp
+    runtime: python
+    plan: free            # free instances sleep when idle (first call after idle is slow); starter is a paid option
+    region: singapore
+    buildCommand: pip install .
+    startCommand: uvicorn --factory fyoda_onedrive_mcp.web:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    autoDeploy: false
+    envVars:
+      - {key: PUBLIC_BASE_URL, sync: false}      # https://<service>.onrender.com
+      - {key: MS_CLIENT_ID, sync: false}
+      - {key: MS_CLIENT_SECRET, sync: false}
+      - {key: SERVER_SECRET, generateValue: true}   # Render creates a random value; you never see or type it
+      - {key: ALLOWED_ACCOUNT, sync: false}      # the one personal Microsoft account allowed to sign in
+      - {key: ONEDRIVE_WRITE_PREFIXES, sync: false}  # e.g. /FYODA  (writes are refused everywhere else; empty = read-only in practice)
+      - {key: ONEDRIVE_READONLY, value: "0"}
